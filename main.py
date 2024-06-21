@@ -1,7 +1,7 @@
 # ---------------------------- IMPORTS ------------------------------- #
 from tkinter import *
 import time
-import pandas as pd
+import pandas
 
 # ---------------------------- UNIVERSAL CONSTANCE'S ------------------------------- #
 BACKGROUND_COLOR = "#B1DDC6"
@@ -9,15 +9,21 @@ BACKGROUND_COLOR = "#B1DDC6"
 
 # ---------------------------- READING DATA ------------------------------- #
 def word_collection():
-    with open("data/french_words.csv") as words:
-        print(words.read())
+    data = pandas.read_csv("data/french_words.csv")
+    english_list = data["English"].tolist()
+    for word in english_list:
+        time.sleep(1)
+        return word
 
+def french_word():
+    data = pandas.read_csv("data/french_words.csv")
+    english_list = data[""].tolist()
+    for word in english_list:
+        time.sleep(1)
+        return word
 
 # ---------------------------- TIMER SETUP ------------------------------- #
-# def swap_sides():
-#     game_in_on = True
-#     while game_in_on:
-#         time.sleep(3)
+
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -30,20 +36,19 @@ wrong_image = PhotoImage(file="images/wrong.png")
 right_image = PhotoImage(file="images/right.png")
 
 
-def english_side():
-    canvas = Canvas(width=800, height=550)
-    card_back = PhotoImage(file="images/card_back.png")
-    canvas.create_image(400, 275, image=card_back)
-    canvas.config(background=f"{BACKGROUND_COLOR}", highlightthickness=0)
-    canvas.grid(row=0, column=0, columnspan=3, rowspan=3)
+canvas = Canvas(width=800, height=550)
+card_back = PhotoImage(file="images/card_back.png")
+canvas.create_image(400, 275, image=card_back)
+canvas.config(background=f"{BACKGROUND_COLOR}", highlightthickness=0)
+canvas.grid(row=0, column=0, columnspan=3, rowspan=3)
 
-    # LABELS:
-    e_label = Label(text=f"English", font=('Courier', 30))
-    e_label.config(highlightthickness=0)
-    e_label.grid(row=0, column=1)
-    e_word = Label(text=f"\nThe word in English", font=('Courier', 35, "bold"))
-    e_word.config(highlightthickness=0)
-    e_word.grid(row=1, column=1)
+# LABELS:
+e_label = Label(text=f"English", font=('Courier', 30))
+e_label.config(highlightthickness=0)
+e_label.grid(row=0, column=1)
+e_word = Label(text=f"\n{word_collection()}", font=('Courier', 35, "bold"))
+e_word.config(highlightthickness=0)
+e_word.grid(row=1, column=1)
 
 
 # FRENCH SIDE:
@@ -64,11 +69,11 @@ def french_side():
 
 
 # BUTTONS
-right_button = Button(image=right_image, highlightthickness=0, command=word_collection)
+right_button = Button(image=right_image, highlightthickness=0, command=french_side)
 right_button.grid(row=4, column=2)
 wrong_button = Button(image=wrong_image, highlightthickness=0)
 wrong_button.grid(row=4, column=0)
 
-english_side()
+# english_side()
 
 root.mainloop()
